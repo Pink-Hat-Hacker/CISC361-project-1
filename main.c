@@ -84,8 +84,8 @@ int main() {
         printf("1. Add student to the list\n");
         printf("2. Delete student(s) from the list\n");
         printf("3. Print list - Top to Bottom\n");
-        printf("3. Print list - Bottom to Top\n");
-        printf("4. Exit\n");
+        printf("4. Print list - Bottom to Top\n");
+        printf("5. Exit\n");
         printf("Enter choice NUMBER: ");
         //scan for number
         if (scanf("%d", &i) <= 0) {
@@ -93,8 +93,24 @@ int main() {
             //main();
             exit(0);
         } else {
-            printf("else");
-            break;
+            //printf("else");
+	    //break;
+	    switch (i) {
+		    case 1:
+			    printf("add student");
+			    break;
+		    case 2:
+			    printf("delete student");
+			    break;
+		    case 3:
+			    printf("top to bottom");
+		    	    break;
+		    case 4:
+			    printf("bottom to top");
+			    break;
+		    case 5:
+			    return 0;
+	    }
         }
     }
 }
