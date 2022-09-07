@@ -8,7 +8,7 @@ typedef struct student
     long id;
     char *curryear;
     int gradyear;
-};
+}
 
 struct node {
     int data;
