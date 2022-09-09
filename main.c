@@ -30,7 +30,7 @@ void addStudent(struct Student *newStudent) {
 	}
 };
 
-voidd add(struct Student *newStudent) {
+void add(struct Student *newStudent) {
 	printf("@ add");
 	struct node *temp;
 	temp = (struct node *) malloc(sizeof(struct node));
@@ -66,8 +66,8 @@ void addStudentAfter(struct Student *newStudent, int location) {
 	left = temp;
 	left->next = right;
 }
-void apppend(struct Student *newStudent) {
-	printf("@ append");
+void apppendStudent(struct Student *newStudent) {
+	printf("@ append student");
 	struct node *temp;
 	struct node *right;
 	
