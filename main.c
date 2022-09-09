@@ -95,6 +95,13 @@ int count() {
 	return i;
 }
 
+void display(struct Student *head) { 
+	current = head;
+	while (current->next) {
+		printf("%s\n%s\n%ld", current->fname, current->lname, current->id);
+		current = current->next;
+	}
+
 //main
 /**
  * Case 1
@@ -131,28 +138,26 @@ int main() {
         //scan for number
         if (scanf("%d", &i) <= 0) {
             printf("Error! Only Integer");
-            //main();
             exit(0);
         } else {
-            //printf("else");
-	    //break;
 	    switch (i) {
 		    case 1:
-			    printf("add student");
+			    //printf("add student");
 			    newStudent = malloc(sizeof(struct Student));			    
 			    int length;
 			    getchar();
+
 			    printf("Enter student first name: \n");
 			    char fnameBuff[BUFFERSIZE];
-			    printf("Enter student last name: \n");
-			    char lnameBuff[BUFFERSIZE];
-
 			    if(fgets(fnameBuff, BUFFERSIZE, stdin) != NULL) {
 			    	length = (int) strlen(fnameBuff);
 				fnameBuff[length - 1] = '\0';
 				newStudent->fname = (char *) malloc(length);
 				strcpy(newStudent->fname, fnameBuff);
 			    }
+
+			    printf("Enter student last name: \n");
+                            char lnameBuff[BUFFERSIZE];
 			    if(fgets(lnameBuff, BUFFERSIZE, stdin) != NULL) {
 				length = (int) strlen(lnameBuff);
                                 lnameBuff[length - 1] = '\0';
@@ -186,6 +191,7 @@ int main() {
 			    break;
 		    case 3:
 			    printf("top to bottom");
+			    display(head);
 		    	    break;
 		    case 4:
 			    printf("bottom to top");
