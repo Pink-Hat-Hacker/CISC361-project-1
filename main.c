@@ -66,7 +66,7 @@ void addStudentAfter(struct Student *newStudent, int location) {
 	left = temp;
 	left->next = right;
 }
-void apppendStudent(struct Student *newStudent) {
+void appendStudent(struct Student *newStudent) {
 	printf("@ append student");
 	struct node *temp;
 	struct node *right;
