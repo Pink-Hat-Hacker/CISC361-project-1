@@ -13,10 +13,10 @@ typedef struct Student
 } student;
 
 struct node {
-    int data;
+    struct Student *data;
     struct node *next;
     struct node *prev;
-};
+} *head;
 
 //protos
 void addStuddent(struct Student * );
