@@ -5,7 +5,7 @@
 #include "main.h"
 
 void addStudent(struct Student *newStudent) {
-	printf("adding...");
+	printf("adding student...");
 	int i = 0;
 	struct node *temp;
 	temp = head;
@@ -23,12 +23,77 @@ void addStudent(struct Student *newStudent) {
 		if (i == 0) {
 			add(newStudent);
 		} else if (i < count()){
-			addafter(newStudent, i++);
+			addStudentAfter(newStudent, i++);
 		} else {
-			append(newStudent);
+			appendStudent(newStudent);
 		}
 	}
 };
+
+voidd add(struct Student *newStudent) {
+	printf("@ add");
+	struct node *temp;
+	temp = (struct node *) malloc(sizeof(struct node));
+	temp->data = newStudent;
+	if (head == NULL) {
+		head = temp;
+		head->next = NULL;
+		head->prev = NULL;
+	} else {
+		temp->next = NULL;
+		temp->prev = head->prev;
+		head = temp;
+	}
+}
+void addStudentAfter(struct Student *newStudent, int location) {
+	printf("@ add student after");
+	struct node *temp;
+	struct node *left;
+	struct node *right;
+	int i;
+
+	right = head;
+	for (i = 0; i < location; i++) {
+		left = right;
+		right = right->next;
+	}
+
+	temp = (struct node *) malloc(sizeof(struct node));
+
+	temp->data = newStudent;
+	left->next = temp;
+	right->prev = temp;
+	left = temp;
+	left->next = right;
+}
+void apppend(struct Student *newStudent) {
+	printf("@ append");
+	struct node *temp;
+	struct node *right;
+	
+	temp = (struct node *) malloc(sizeof(struct node));
+	temp->data = newStudent;
+	right = (struct node *) head;
+
+	while (right->next != NULL) {
+		right = right->next;
+	}
+	right->next = temp;
+	temp->prev = right;
+	right = temp;
+	right->next = NULL;
+}
+
+int count() {
+	struct node *n;
+	int i = 0;
+	n = head;
+	while (n != NULL) {
+		n = n->next;
+		i++;
+	}
+	return i;
+}
 
 //main
 /**
