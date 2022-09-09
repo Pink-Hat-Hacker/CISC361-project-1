@@ -95,13 +95,13 @@ int count() {
 	return i;
 }
 
-void display(struct Student *head) { 
+/*void display(struct Student *head) { 
 	current = head;
 	while (current->next) {
 		printf("%s\n%s\n%ld", current->fname, current->lname, current->id);
 		current = current->next;
 	}
-
+}*/
 //main
 /**
  * Case 1
@@ -170,6 +170,7 @@ int main() {
 			    scanf("%ld", &tempID);
 			    newStudent->id = tempID;
 
+			    scanf("%*[^\n]");scanf("%*c");
 			    printf("Enter current year: \n");
 			    char currYearBuff[BUFFERSIZE];
 			    if(fgets(currYearBuff, BUFFERSIZE, stdin) != NULL) {
@@ -191,7 +192,7 @@ int main() {
 			    break;
 		    case 3:
 			    printf("top to bottom");
-			    display(head);
+			    //display(head);
 		    	    break;
 		    case 4:
 			    printf("bottom to top");
