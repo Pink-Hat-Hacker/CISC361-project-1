@@ -1,6 +1,8 @@
 // Zoe Valladares - pink-hat-hacker 9/5/2022
 
-typedef struct student
+#define BUFFERSIZE 128
+
+typedef struct Student
 {
     /* data */
     char *lname;
@@ -8,10 +10,13 @@ typedef struct student
     long id;
     char *curryear;
     int gradyear;
-}
+} student;
 
 struct node {
     int data;
     struct node *next;
     struct node *prev;
-}
+};
+
+//protos
+void addStuddent(struct Student * );

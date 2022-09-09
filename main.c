@@ -1,58 +1,34 @@
 // Zoe Valladares - pink-hat-hacker 9/5/2022
-//#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "main.h"
 
-//node creatiom in main.h
+void addStudent(struct Student *newStudent) {
+	printf("adding...");
+	int i = 0;
+	struct node *temp;
+	temp = head;
 
-//inserting node at the front
-// void addFront(struct  Node** head, int data){
-//     struct Node* newNode = (struct Node*)malloc(sizeOf(struct Node));
-//     newNode -> data = data;
-//     newNode -> next = (*head);
-//     newNode -> prev = NULL;
-
-//     if((*head) != NULL){
-//         (*head) -> prev = newNode;
-//     }
-//     (*head) = newNode;
-// }
-
-// //insert after a specific place
-// void addAfter(struct Node* prevNode, int data) {
-//     if (prevNode == NULL) {
-//         printf("error cannot be null");
-//         return;
-//     }
-//     //allocate space for new nodde
-//     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-//     newNode->data = data;
-//     newNode->next = prevNode->next;
-//     prevNode->next = newNode;
-//     newNode->prev = prevNode;
-
-//     if (newNode->next != NULL) {
-//         newNode->next->prev = newNode;
-//     }
-// }
-
-// //inster a new node at the end
-// void addEnd(struct Node** head, int data) {
-//     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-//     newNode->data = data;
-//     newNode->next = NULL;
-//     struct Node* temp = *head;
-
-//     if (*head == NULL){
-//         newNode->prev = NULL;
-//         *head = newNode;
-//         return;
-//     }
-
-//     while (temp->next != NULL){
-//         temp = temp-> next;
-//     }
-// }
+	if (temp == NULL) {
+		add(newStudent);
+	} else {
+		while (temp != NULL) {
+			if(temp->data->lname < newStudent->lname){
+				i++;
+			}
+			temp->prev = temp;
+			temp = temp->next;
+		}
+		if (i == 0) {
+			add(newStudent);
+		} else if (i < count()){
+			addafter(newStudent, i++);
+		} else {
+			append(newStudent);
+		}
+	}
+};
 
 //main
 /**
@@ -75,9 +51,9 @@
 
 int main() {
     int i;
-    // struct student *newStudent;
+    struct Student *newStudent;
     // struct node *n;
-    // head = NULL;
+    head = NULL;
     while (1) {
         //print cases
         printf("\nList of possible actions:\n");
@@ -98,6 +74,47 @@ int main() {
 	    switch (i) {
 		    case 1:
 			    printf("add student");
+			    newStudent = malloc(sizeof(struct Student));			    
+			    int length;
+			    getchar();
+			    printf("Enter student first name: \n");
+			    char fnameBuff[BUFFERSIZE];
+			    printf("Enter student last name: \n");
+			    char lnameBuff[BUFFERSIZE];
+
+			    if(fgets(fnameBuff, BUFFERSIZE, stdin) != NULL) {
+			    	length = (int) strlen(fnameBuff);
+				fnameBuff[length - 1] = '\0';
+				newStudent->fname = (char *) malloc(length);
+				strcpy(newStudent->fname, fnameBuff);
+			    }
+			    if(fgets(lnameBuff, BUFFERSIZE, stdin) != NULL) {
+				length = (int) strlen(lnameBuff);
+                                lnameBuff[length - 1] = '\0';
+                                newStudent->lname = (char *) malloc(length);
+                                strcpy(newStudent->lname, lnameBuff);
+			    }
+
+			    printf("Enter student ID: \n");
+			    long tempID = 0;
+			    scanf("%ld", &tempID);
+			    newStudent->id = tempID;
+
+			    printf("Enter current year: \n");
+			    char currYearBuff[BUFFERSIZE];
+			    if(fgets(currYearBuff, BUFFERSIZE, stdin) != NULL) {
+			    	length = (int) strlen(currYearBuff);
+				currYearBuff[length - 1] = '\0';
+				newStudent->curryear = (char *) malloc(length);
+				strcpy(newStudent->curryear, currYearBuff);
+			    }
+
+			    printf("Enter student graduation year: \n");
+                            int tempGradYear = 0;
+                            scanf("%d", &tempGradYear);
+                            newStudent->gradyear = tempGradYear;
+			    
+			    addStudent(newStudent);
 			    break;
 		    case 2:
 			    printf("delete student");
