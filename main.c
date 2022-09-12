@@ -95,13 +95,33 @@ int count() {
 	return i;
 }
 
-/*void display(struct Student *head) { 
+void printIO(struct node *current) { 
 	current = head;
-	while (current->next) {
-		printf("%s\n%s\n%ld", current->fname, current->lname, current->id);
-		current = current->next;
+	if (current == NULL) {
+		return;
 	}
-}*/
+
+	while (current != NULL) {
+		printf("\n");
+		printf("Name: %s %s, \nID: %ld, \nCurrent Year: %s", current->data->fname, current->data->lname, current->data->id, current->data->curryear);
+	       current = current->next;
+	       printf("\n");
+	}	       
+}
+void printRO(struct node** current) {
+	struct node* tail = *current;
+
+	while (tail->next != NULL) {
+		tail = tail->next;
+	}
+
+	while (tail != *current) {
+		printf("\n");
+		printf("Name: %s %s, \nID: %ld, \nCurrent Year: %s", tail->data->fname, tail->data->lname, tail->data->id, tail->data->curryear);
+		tail = tail->prev;
+		printf("\n");
+	}
+}
 //main
 /**
  * Case 1
@@ -192,10 +212,11 @@ int main() {
 			    break;
 		    case 3:
 			    printf("top to bottom");
-			    //display(head);
+			    printIO(head);
 		    	    break;
 		    case 4:
 			    printf("bottom to top");
+			    printRO(&head);
 			    break;
 		    case 5:
 			    return 0;
