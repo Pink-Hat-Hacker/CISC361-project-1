@@ -4,96 +4,59 @@
 #include <string.h>
 #include "main.h"
 
-void addStudent(struct Student *newStudent) {
-	printf("adding student...");
-	int i = 0;
-	struct node *temp;
-	temp = head;
-
-	if (temp == NULL) {
-		add(newStudent);
-	} else {
-		while (temp != NULL) {
-			if(temp->data->lname < newStudent->lname){
-				i++;
-			}
-			temp->prev = temp;
-			temp = temp->next;
-		}
-		if (i == 0) {
-			add(newStudent);
-		} else if (i < count()){
-			addStudentAfter(newStudent, i++);
-		} else {
-			appendStudent(newStudent);
-		}
-	}
-};
-
-void add(struct Student *newStudent) {
-	printf("@ add");
-	struct node *temp;
-	temp = (struct node *) malloc(sizeof(struct node));
-	temp->data = newStudent;
+struct node* addStudent(struct node *head, struct Student *newStudent) {
+	struct node * temp;
 	if (head == NULL) {
+		temp = (struct node *) malloc(sizeof(struct node));
+		temp->data = newStudent;
 		head = temp;
 		head->next = NULL;
 		head->prev = NULL;
+		return head;
 	} else {
-		temp->next = NULL;
-		temp->prev = head->prev;
-		head = temp;
+		struct node * temp1;
+		struct node * temp2;
+		temp1 = (struct node *) malloc(sizeof(struct node));
+		temp2 = head;
+		
+		while (temp2->next != NULL) {
+			temp2 = temp2->next;
+		}
+
+		temp2->next=temp1;
+		temp1->prev=temp2;
+		temp1->data = newStudent;
+		temp1->next = NULL;
+		return head;
 	}
-}
-void addStudentAfter(struct Student *newStudent, int location) {
-	printf("@ add student after");
-	struct node *temp;
-	struct node *left;
-	struct node *right;
-	int i;
+};
 
-	right = head;
-	for (i = 0; i < location; i++) {
-		left = right;
-		right = right->next;
+int delete(char *delName) {
+	printf("%s delname \n", delName);
+	struct node *temp, *prev;
+	temp = head;
+	while (temp != NULL) {
+		printf("%s temp->data->lname \n", temp->data->lname);
+		if (temp->data->lname == delName) {
+			if (temp == head) {
+				printf("temp is head %s", temp->data->lname);
+				head = temp->next;
+				free(temp);
+				return 0;
+			} else {
+				prev->next = temp->next;
+				temp->next->prev = temp;
+				free(temp);
+				return 0;
+			}
+		} else {
+			prev = temp;
+			temp = temp->next;
+		}
 	}
+	return 1;
+};
 
-	temp = (struct node *) malloc(sizeof(struct node));
-
-	temp->data = newStudent;
-	left->next = temp;
-	right->prev = temp;
-	left = temp;
-	left->next = right;
-}
-void appendStudent(struct Student *newStudent) {
-	printf("@ append student");
-	struct node *temp;
-	struct node *right;
-	
-	temp = (struct node *) malloc(sizeof(struct node));
-	temp->data = newStudent;
-	right = (struct node *) head;
-
-	while (right->next != NULL) {
-		right = right->next;
-	}
-	right->next = temp;
-	temp->prev = right;
-	right = temp;
-	right->next = NULL;
-}
-
-int count() {
-	struct node *n;
-	int i = 0;
-	n = head;
-	while (n != NULL) {
-		n = n->next;
-		i++;
-	}
-	return i;
-}
 
 void printIO(struct node *current) { 
 	current = head;
@@ -109,19 +72,20 @@ void printIO(struct node *current) {
 	}	       
 }
 void printRO(struct node *current) {
+	current = head;
+	if (current == NULL) {
+		return;
+	}
 	struct node *tail = current;
-	//printf("CURRENT %s", current->data->lname);
-	//printf("TAIL %s", tail->data->lname);
 	while (tail->next != NULL) {
 		tail = tail->next;
 	}
-	printf("TAIL %s", tail->data->lname);
-	/*while(tail->prev != NULL){
+	while(tail != NULL){
 		printf("\n");
 		printf("Name: %s %s, \nID: %ld, \nCurrent Year: %s", tail->data->fname, tail->data->lname, tail->data->id, tail->data->curryear);
 		tail = tail->prev;
 		printf("\n");
-	}*/
+	}
 }
 //main
 /**
@@ -160,11 +124,11 @@ int main() {
         if (scanf("%d", &i) <= 0) {
             printf("Error! Only Integer");
             exit(0);
-        } else {
+        } else {	
+	    newStudent = malloc(sizeof(struct Student));
 	    switch (i) {
 		    case 1:
-			    //printf("add student");
-			    newStudent = malloc(sizeof(struct Student));			    
+			    //printf("add student");			    
 			    int length;
 			    getchar();
 
@@ -206,18 +170,38 @@ int main() {
                             scanf("%d", &tempGradYear);
                             newStudent->gradyear = tempGradYear;
 			    
-			    addStudent(newStudent);
+			    head=addStudent(head, newStudent);
+			    printf("%d\n",head->data->gradyear);
 			    break;
 		    case 2:
-			    printf("delete student");
+			    //newStudent = malloc(sizeof(struct Student));
+			    //int length;
+			    getchar();
+			    
+			    if (head == NULL) {
+				    printf("List is Empty\n");
+			    } else {
+				    printf("Enter the last name of the student to delete: ");
+				    char studToDeleteBuffer[BUFFERSIZE];
+				    if (fgets(studToDeleteBuffer, BUFFERSIZE, stdin) != NULL) {
+					    length = (int) strlen(studToDeleteBuffer);
+					    studToDeleteBuffer[length - 1] = '\0';
+					    newStudent->lname = (char *) malloc(length);
+					    strcpy(newStudent->lname, studToDeleteBuffer);
+				    }
+				    if (delete(newStudent->lname)) {
+					    printf("%s deleted successfully\n", studToDeleteBuffer);
+				    } else {
+					    printf("%s not found in the list\n", studToDeleteBuffer);
+				    }
+			    }
 			    break;
 		    case 3:
-			    printf("top to bottom");
+			    printf("In order print\n");
 			    printIO(head);
 		    	    break;
 		    case 4:
-			    printf("bottom to top\n");
-			    //printf("%s", head->data->lname);
+			    printf("Reverse order print\n");
 			    printRO(head);
 			    break;
 		    case 5:

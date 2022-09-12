@@ -19,10 +19,8 @@ struct node {
 } *head;
 
 //protos
-void addStudent(struct Student * );
-void add(struct Student * );
-void addStudentAfter(struct Student *, int);
-void appendStudent(struct Student * );
-int count();
+struct node* addStudent(struct node *, struct Student * );
+int delete(char * );
+//void delete(char *);
 void printIO(struct node * );
 void printRO(struct node * );
