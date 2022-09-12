@@ -108,19 +108,20 @@ void printIO(struct node *current) {
 	       printf("\n");
 	}	       
 }
-void printRO(struct node** current) {
-	struct node* tail = *current;
-
+void printRO(struct node *current) {
+	struct node *tail = current;
+	//printf("CURRENT %s", current->data->lname);
+	//printf("TAIL %s", tail->data->lname);
 	while (tail->next != NULL) {
 		tail = tail->next;
 	}
-
-	while (tail != *current) {
+	printf("TAIL %s", tail->data->lname);
+	/*while(tail->prev != NULL){
 		printf("\n");
 		printf("Name: %s %s, \nID: %ld, \nCurrent Year: %s", tail->data->fname, tail->data->lname, tail->data->id, tail->data->curryear);
 		tail = tail->prev;
 		printf("\n");
-	}
+	}*/
 }
 //main
 /**
@@ -215,8 +216,9 @@ int main() {
 			    printIO(head);
 		    	    break;
 		    case 4:
-			    printf("bottom to top");
-			    printRO(&head);
+			    printf("bottom to top\n");
+			    //printf("%s", head->data->lname);
+			    printRO(head);
 			    break;
 		    case 5:
 			    return 0;

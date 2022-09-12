@@ -25,4 +25,4 @@ void addStudentAfter(struct Student *, int);
 void appendStudent(struct Student * );
 int count();
 void printIO(struct node * );
-void printRO(struct node** );
+void printRO(struct node * );
