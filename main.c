@@ -181,6 +181,21 @@ int main() {
 			    if (head == NULL) {
 				    printf("List is Empty\n");
 			    } else {
+			    	printf("Enter the last name of the student to delete: ");
+				char studToDeleteBuffer[BUFFERSIZE];
+                                if (fgets(studToDeleteBuffer, BUFFERSIZE, stdin) != NULL) {
+					length = (int) strlen(studToDeleteBuffer);
+                                        studToDeleteBuffer[length - 1] = '\0';
+                                        //printf("%s", studToDeleteBuffer);
+				}
+				if (delete(studToDeleteBuffer)) {
+                                      	printf("%s deleted successfully\n", studToDeleteBuffer);
+                                } else {
+					printf("%s not found in the list\n", studToDeleteBuffer);
+                                }
+			    } 
+			    
+			    /*else {
 				    printf("Enter the last name of the student to delete: ");
 				    char studToDeleteBuffer[BUFFERSIZE];
 				    if (fgets(studToDeleteBuffer, BUFFERSIZE, stdin) != NULL) {
@@ -194,7 +209,7 @@ int main() {
 				    } else {
 					    printf("%s not found in the list\n", studToDeleteBuffer);
 				    }
-			    }
+			    }*/
 			    break;
 		    case 3:
 			    printf("In order print\n");
