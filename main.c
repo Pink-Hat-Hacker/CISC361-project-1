@@ -31,31 +31,38 @@ struct node* addStudent(struct node *head, struct Student *newStudent) {
 	}
 };
 
-int delete(char *delName) {
-	printf("%s delname \n", delName);
-	struct node *temp, *prev;
-	temp = head;
-	while (temp != NULL) {
-		printf("%s temp->data->lname \n", temp->data->lname);
-		if (temp->data->lname == delName) {
-			if (temp == head) {
-				printf("temp is head %s", temp->data->lname);
-				head = temp->next;
-				free(temp);
-				return 0;
-			} else {
-				prev->next = temp->next;
-				temp->next->prev = temp;
-				free(temp);
-				return 0;
-			}
+void deleteNode(struct node *toDelete) {
+	free(toDelete->data->lname);
+	free(toDelete);
+};
+
+void deleteStudent() {
+	struct node *current = head;
+	struct node *next;
+	int length;
+	char *deleteName;
+	char stuTemp[BUFFERSIZE];
+
+	if (head == NULL) {
+		return;
+	}
+	if (fgets(stuTemp, BUFFERSIZE, stdin) != NULL) {
+		length = (int) strlen(stuTemp);
+		stuTemp[length-1] = '\0';
+		deleteName = (char *) malloc(length);
+		strcpy(deleteName, stuTemp);
+	}
+	while (current != NULL) {
+		if (strcmp(current->data->lname, deleteName) == 0) {
+			next = current->next;
+			deleteNode(current);
+			current = next;
 		} else {
-			prev = temp;
-			temp = temp->next;
+			current = current->next;
 		}
 	}
-	return 1;
-};
+	free(deleteName);
+}
 
 
 void printIO(struct node *current) { 
@@ -174,11 +181,14 @@ int main() {
 			    printf("%d\n",head->data->gradyear);
 			    break;
 		    case 2:
-			    //newStudent = malloc(sizeof(struct Student));
-			    //int length;
 			    getchar();
-			    
 			    if (head == NULL) {
+				    printf("List is Empty\n");
+			    } else {
+				    printf("Enter the last name of the student to delete: ");
+				    deleteStudent();
+			    }
+			    /*if (head == NULL) {
 				    printf("List is Empty\n");
 			    } else {
 			    	printf("Enter the last name of the student to delete: ");
@@ -193,22 +203,6 @@ int main() {
                                 } else {
 					printf("%s not found in the list\n", studToDeleteBuffer);
                                 }
-			    } 
-			    
-			    /*else {
-				    printf("Enter the last name of the student to delete: ");
-				    char studToDeleteBuffer[BUFFERSIZE];
-				    if (fgets(studToDeleteBuffer, BUFFERSIZE, stdin) != NULL) {
-					    length = (int) strlen(studToDeleteBuffer);
-					    studToDeleteBuffer[length - 1] = '\0';
-					    newStudent->lname = (char *) malloc(length);
-					    strcpy(newStudent->lname, studToDeleteBuffer);
-				    }
-				    if (delete(newStudent->lname)) {
-					    printf("%s deleted successfully\n", studToDeleteBuffer);
-				    } else {
-					    printf("%s not found in the list\n", studToDeleteBuffer);
-				    }
 			    }*/
 			    break;
 		    case 3:

@@ -20,7 +20,8 @@ struct node {
 
 //protos
 struct node* addStudent(struct node *, struct Student * );
-int delete(char * );
+void deleteNode(struct node * );
+void deleteStudent();
 //void delete(char *);
 void printIO(struct node * );
 void printRO(struct node * );
