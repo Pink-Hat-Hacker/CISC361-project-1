@@ -79,6 +79,8 @@ void deleteStudent() {
 				printf("\n [%s] DELETING...\n", delete->data->lname);
 				free(delete->data->fname);
 				free(delete->data->lname);
+				free(delete->data->curryear);
+				free(delete->data);
 				free(delete);
 			} else {
 				temp = temp->next;
