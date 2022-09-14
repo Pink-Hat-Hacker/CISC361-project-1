@@ -59,7 +59,7 @@ void deleteStudent() {
 				
 				if (temp->prev == NULL && temp->next == NULL) {
 					//if prev and next == NULL
-					head == NULL;
+					head = NULL;
 				} else if (temp->prev == NULL && temp->next != NULL) {
 					//fist song
 					head = temp->next;
@@ -217,8 +217,9 @@ int main() {
 			    }
 		    	    break;
 		    case 4:
+			    printf("Reverse order print\n");
 			    if (head == NULL) {
-				    printf("Reverse order print\n");
+				    printf("List is empty\n");
 			    } else {
 				    printRO(head);
 			    }
