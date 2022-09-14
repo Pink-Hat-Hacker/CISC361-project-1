@@ -31,50 +31,59 @@ struct node* addStudent(struct node *head, struct Student *newStudent) {
 	}
 };
 
-void deleteNode(struct node *toDelete) {
-	free(toDelete->data->lname);
-	free(toDelete);
+void clear() {
+	struct node *current = head;
+	while(current != NULL) {
+		struct node *next = current->next;
+		free(current->data->fname);
+		free(current->data->lname);
+		free(current);
+		current = next;
+	}
 };
 
 void deleteStudent() {
-	struct node *current = head;
-	struct node *next, *prev;
+	char delName[BUFFERSIZE];
 	int length;
-	char *deleteName;
-	char stuTemp[BUFFERSIZE];
 
-	if (fgets(stuTemp, BUFFERSIZE, stdin) != NULL) {
-		length = (int) strlen(stuTemp);
-		stuTemp[length-1] = '\0';
-		deleteName = (char *) malloc(length);
-		strcpy(deleteName, stuTemp);
-	}
-	while (current != NULL) {
-		if (strcmp(current->data->lname, deleteName) == 0) {
-			//printf("inside delete while loop");
-			//prev = current->prev;
-			next = current->next;
-			//prev->next = current->next;
-			//current->next->prev = current->prev;
-			//current->prev = prev;
-			deleteNode(current);
-			current = next;
-		} else {
-			current = current->next;
+	printf("Enter the last name of the student to delete: ");
+	if (fgets(delName, BUFFERSIZE, stdin) != NULL) {
+		length = (int) strlen(delName);
+		delName[length - 1] = '\0';
+		struct node *temp = head;
+
+		while (temp != NULL) {
+			struct node *delete = NULL;
+			if (strcmp(temp->data->lname, delName) == 0) {
+				delete = temp;
+				
+				if (temp->prev == NULL && temp->next == NULL) {
+					//if prev and next == NULL
+					head == NULL;
+				} else if (temp->prev == NULL && temp->next != NULL) {
+					//fist song
+					head = temp->next;
+					temp->next->prev = NULL;
+				} else if (temp->prev != NULL && temp->next != NULL) {
+					//middle song
+					temp->prev->next = temp->next;
+					temp->next->prev = temp->prev;
+				} else if (temp->prev != NULL && temp->next == NULL) {
+					//last song
+					temp->prev->next = NULL;
+				}
+				temp = temp->next;
+
+				printf("\n [%s] DELETING...\n", delete->data->lname);
+				free(delete->data->fname);
+				free(delete->data->lname);
+				free(delete);
+			} else {
+				temp = temp->next;
+			}
 		}
-		//head
-		/*if ((current->prev == NULL) && (strcmp(current->data->lname, deleteName) == 0)) {
-			prev = current->prev;
-			next = current->next;
-			prev->next = next;
-			next->prev = prev;
-			deleteNode(current);
-		} else {
-			current = current->next;
-		}*/
 	}
-	free(deleteName);
-}
+};
 
 
 void printIO(struct node *current) { 
@@ -89,7 +98,7 @@ void printIO(struct node *current) {
 		current = current->next;
 		printf("\n");
 	}	       
-}
+};
 void printRO(struct node *current) {
 	current = head;
 	if (current == NULL) {
@@ -105,7 +114,7 @@ void printRO(struct node *current) {
 		tail = tail->prev;
 		printf("\n");
 	}
-}
+};
 //main
 /**
  * Case 1
@@ -140,6 +149,7 @@ int main() {
         printf("5. Exit\n");
         printf("Enter choice NUMBER: ");
         //scan for number
+	if (scanf("%d", &i) <= 0) {
             printf("Error! Only Integer");
             exit(0);
         } else {	
@@ -195,48 +205,30 @@ int main() {
 			    if (head == NULL) {
 				    printf("List is Empty\n");
 			    } else {
-				    printf("Enter the last name of the student to delete: ");
 				    deleteStudent();
 			    }
-			    /*if (head == NULL) {
-				    printf("List is Empty\n");
-			    } else {
-			    	printf("Enter the last name of the student to delete: ");
-				char studToDeleteBuffer[BUFFERSIZE];
-                                if (fgets(studToDeleteBuffer, BUFFERSIZE, stdin) != NULL) {
-					length = (int) strlen(studToDeleteBuffer);
-                                        studToDeleteBuffer[length - 1] = '\0';
-                                        //printf("%s", studToDeleteBuffer);
-				}
-				if (delete(studToDeleteBuffer)) {
-                                      	printf("%s deleted successfully\n", studToDeleteBuffer);
-                                } else {
-					printf("%s not found in the list\n", studToDeleteBuffer);
-                                }
-			    }*/
 			    break;
 		    case 3:
 			    printf("In order print\n");
-			    printIO(head);
+			    if (head == NULL) {
+				    printf("List is Empty\n");
+			    } else {
+				    printIO(head);
+			    }
 		    	    break;
 		    case 4:
-			    printf("Reverse order print\n");
-			    printRO(head);
+			    if (head == NULL) {
+				    printf("Reverse order print\n");
+			    } else {
+				    printRO(head);
+			    }
 			    break;
 		    case 5:
+			    clear();
 			    return 0;
 	    }
         }
     }
-    struct node *temp = head;
-    while (temp) { 
-	    free(temp->data->fname);
-            free(temp->data->lname);
-            struct node *cur = temp;
-            temp = temp->next;
-            free(cur);
-    }
-    return 0;
 }
 
 /**
@@ -245,4 +237,5 @@ int main() {
  * - gcc -g
  * - put everything in one executable
  * - EX:
- * --- list: main.c list.h list.c
+ * --- list: main.c list.h list.c*/
+// Zoe Valladares - pink-hat-hacker 9/5/2022
