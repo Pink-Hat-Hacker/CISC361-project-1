@@ -37,6 +37,7 @@ void clear() {
 		struct node *next = current->next;
 		free(current->data->fname);
 		free(current->data->lname);
+		free(current->data->curryear);
 		free(current);
 		current = next;
 	}
@@ -94,7 +95,7 @@ void printIO(struct node *current) {
 
 	while (current != NULL) {
 		printf("\n");
-		printf("Name: %s %s, \nID: %ld, \nCurrent Year: %s", current->data->fname, current->data->lname, current->data->id, current->data->curryear);
+		printf("Name: %s %s, \nID: %ld, \nCurrent Year: %s, \nGraduation Year: %d", current->data->fname, current->data->lname, current->data->id, current->data->curryear, current->data->gradyear);
 		current = current->next;
 		printf("\n");
 	}	       
@@ -110,29 +111,11 @@ void printRO(struct node *current) {
 	}
 	while(tail != NULL){
 		printf("\n");
-		printf("Name: %s %s, \nID: %ld, \nCurrent Year: %s", tail->data->fname, tail->data->lname, tail->data->id, tail->data->curryear);
+		printf("Name: %s %s, \nID: %ld, \nCurrent Year: %s, \nGraduation Year: %d", tail->data->fname, tail->data->lname, tail->data->id, tail->data->curryear, tail->data->gradyear);
 		tail = tail->prev;
 		printf("\n");
 	}
 };
-//main
-/**
- * Case 1
- * - add student to list
- * - will prompt for fname, lname, ID, curryear, gradyear
- * - will add to the end of the list
- * Case 2
- * - delete students
- * - will ask for lname
- * - deletes all instances of that lname
- * Case 3
- * - print list from beginning to end
- * Case 4
- * - print list from end to beginning
- * Case 5
- * - exit
- * - When exiting the program, free all dynamically allocated memory to leave no memory leak.
-*/
 
 int main() {
     int i;
@@ -168,7 +151,7 @@ int main() {
 				newStudent->fname = (char *) malloc(length);
 				strcpy(newStudent->fname, fnameBuff);
 			    }
-			    free(newStudent->fname);
+			    //free(newStudent->fname);
 			    //free(newStudent);
 
 			    printf("Enter student last name: \n");
@@ -179,7 +162,7 @@ int main() {
                                 newStudent->lname = (char *) malloc(length);
                                 strcpy(newStudent->lname, lnameBuff);
 			    }
-			    free(newStudent->lname);
+			    //free(newStudent->lname);
 			    //free(newStudent);
 
 			    printf("Enter student ID: \n");
@@ -196,10 +179,10 @@ int main() {
 				newStudent->curryear = (char *) malloc(length);
 				strcpy(newStudent->curryear, currYearBuff);
 			    }
-			    free(newStudent->curryear);
+			    //free(newStudent->curryear);
 			    //free(newStudent);
 			    
-			    scanf("%*[^\n]");scanf("%*c");
+			    //scanf("%*[^\n]");scanf("%*c");
 			    printf("Enter student graduation year: \n");
                             int tempGradYear = 0;
                             scanf("%d", &tempGradYear);
