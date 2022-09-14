@@ -168,6 +168,8 @@ int main() {
 				newStudent->fname = (char *) malloc(length);
 				strcpy(newStudent->fname, fnameBuff);
 			    }
+			    free(newStudent->fname);
+			    //free(newStudent);
 
 			    printf("Enter student last name: \n");
                             char lnameBuff[BUFFERSIZE];
@@ -177,13 +179,15 @@ int main() {
                                 newStudent->lname = (char *) malloc(length);
                                 strcpy(newStudent->lname, lnameBuff);
 			    }
+			    free(newStudent->lname);
+			    //free(newStudent);
 
 			    printf("Enter student ID: \n");
 			    long tempID = 0;
 			    scanf("%ld", &tempID);
 			    newStudent->id = tempID;
-
 			    scanf("%*[^\n]");scanf("%*c");
+			    
 			    printf("Enter current year: \n");
 			    char currYearBuff[BUFFERSIZE];
 			    if(fgets(currYearBuff, BUFFERSIZE, stdin) != NULL) {
@@ -192,7 +196,10 @@ int main() {
 				newStudent->curryear = (char *) malloc(length);
 				strcpy(newStudent->curryear, currYearBuff);
 			    }
-
+			    free(newStudent->curryear);
+			    //free(newStudent);
+			    
+			    scanf("%*[^\n]");scanf("%*c");
 			    printf("Enter student graduation year: \n");
                             int tempGradYear = 0;
                             scanf("%d", &tempGradYear);
