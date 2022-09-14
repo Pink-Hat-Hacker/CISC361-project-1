@@ -38,6 +38,7 @@ void clear() {
 		free(current->data->fname);
 		free(current->data->lname);
 		free(current->data->curryear);
+		free(current->data);
 		free(current);
 		current = next;
 	}
@@ -136,9 +137,9 @@ int main() {
             printf("Error! Only Integer");
             exit(0);
         } else {	
-	    newStudent = malloc(sizeof(struct Student));
 	    switch (i) {
 		    case 1:
+	    		   newStudent = malloc(sizeof(struct Student));
 			    //printf("add student");			    
 			    int length;
 			    getchar();
