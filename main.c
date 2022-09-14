@@ -4,6 +4,13 @@
 #include <string.h>
 #include "main.h"
 
+/**
+ * Function: addStudent()
+ * Return types: node pointer
+ * Params: node pointer to head, Student pointer to newstudent
+ * Purpose: add student to the list. base case if head is null and starts the DLL.
+ * if head is not null it traverses until the end and adds newStudent.
+ */ 
 struct node* addStudent(struct node *head, struct Student *newStudent) {
 	struct node * temp;
 	if (head == NULL) {
@@ -31,6 +38,12 @@ struct node* addStudent(struct node *head, struct Student *newStudent) {
 	}
 };
 
+/**
+ * Fuction: clear()
+ * Return type: void
+ * Params: none
+ * Purpose: frees malloc'd space for each node by traversing the list and freeing the data, data, then the node.
+ */
 void clear() {
 	struct node *current = head;
 	while(current != NULL) {
@@ -44,6 +57,14 @@ void clear() {
 	}
 };
 
+/**
+ * Function: deleteStudent()
+ * Return type: void
+ * Params: none
+ * Purpose: Prompts user for last name and allocates space for it. traverses the DLL
+ * and checks cases head node, first node, middle node, and last node to ensure that deleting 
+ * and repointing is done properly
+ */
 void deleteStudent() {
 	char delName[BUFFERSIZE];
 	int length;
@@ -63,15 +84,15 @@ void deleteStudent() {
 					//if prev and next == NULL
 					head = NULL;
 				} else if (temp->prev == NULL && temp->next != NULL) {
-					//fist song
+					//fist node
 					head = temp->next;
 					temp->next->prev = NULL;
 				} else if (temp->prev != NULL && temp->next != NULL) {
-					//middle song
+					//middle node
 					temp->prev->next = temp->next;
 					temp->next->prev = temp->prev;
 				} else if (temp->prev != NULL && temp->next == NULL) {
-					//last song
+					//last node
 					temp->prev->next = NULL;
 				}
 				temp = temp->next;
@@ -89,7 +110,13 @@ void deleteStudent() {
 	}
 };
 
-
+/**
+ * Function: printIO()
+ * Return type: void
+ * Params: pointer to head node
+ * Purpose: receives pointer to head node and traverses to the end
+ * while printing each node
+ */
 void printIO(struct node *current) { 
 	current = head;
 	if (current == NULL) {
@@ -103,6 +130,14 @@ void printIO(struct node *current) {
 		printf("\n");
 	}	       
 };
+
+/**
+ * Function: printRO()
+ * Return type: void
+ * Params: pointer to head node
+ * Purpose: receives pointer to head and traverses until the end.
+ * Finds the end and them traverses back to the beginning while printing each node.
+ */
 void printRO(struct node *current) {
 	current = head;
 	if (current == NULL) {
@@ -123,10 +158,9 @@ void printRO(struct node *current) {
 int main() {
     int i;
     struct Student *newStudent;
-    // struct node *n;
     head = NULL;
+    
     while (1) {
-        //print cases
         printf("\nList of possible actions:\n");
         printf("1. Add student to the list\n");
         printf("2. Delete student(s) from the list\n");
@@ -134,15 +168,14 @@ int main() {
         printf("4. Print list - Bottom to Top\n");
         printf("5. Exit\n");
         printf("Enter choice NUMBER: ");
-        //scan for number
+        
 	if (scanf("%d", &i) <= 0) {
             printf("Error! Only Integer");
             exit(0);
         } else {	
 	    switch (i) {
 		    case 1:
-	    		   newStudent = malloc(sizeof(struct Student));
-			    //printf("add student");			    
+	    		    newStudent = malloc(sizeof(struct Student));			    
 			    int length;
 			    getchar();
 
@@ -154,9 +187,7 @@ int main() {
 				newStudent->fname = (char *) malloc(length);
 				strcpy(newStudent->fname, fnameBuff);
 			    }
-			    //free(newStudent->fname);
-			    //free(newStudent);
-
+			    
 			    printf("Enter student last name: \n");
                             char lnameBuff[BUFFERSIZE];
 			    if(fgets(lnameBuff, BUFFERSIZE, stdin) != NULL) {
@@ -165,8 +196,6 @@ int main() {
                                 newStudent->lname = (char *) malloc(length);
                                 strcpy(newStudent->lname, lnameBuff);
 			    }
-			    //free(newStudent->lname);
-			    //free(newStudent);
 
 			    printf("Enter student ID: \n");
 			    long tempID = 0;
@@ -182,10 +211,7 @@ int main() {
 				newStudent->curryear = (char *) malloc(length);
 				strcpy(newStudent->curryear, currYearBuff);
 			    }
-			    //free(newStudent->curryear);
-			    //free(newStudent);
 			    
-			    //scanf("%*[^\n]");scanf("%*c");
 			    printf("Enter student graduation year: \n");
                             int tempGradYear = 0;
                             scanf("%d", &tempGradYear);
@@ -224,12 +250,3 @@ int main() {
         }
     }
 }
-
-/**
- * Notes from class:
- * - makefile
- * - gcc -g
- * - put everything in one executable
- * - EX:
- * --- list: main.c list.h list.c*/
-// Zoe Valladares - pink-hat-hacker 9/5/2022
