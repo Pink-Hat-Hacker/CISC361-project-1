@@ -38,14 +38,11 @@ void deleteNode(struct node *toDelete) {
 
 void deleteStudent() {
 	struct node *current = head;
-	struct node *next;
+	struct node *next, *prev;
 	int length;
 	char *deleteName;
 	char stuTemp[BUFFERSIZE];
 
-	if (head == NULL) {
-		return;
-	}
 	if (fgets(stuTemp, BUFFERSIZE, stdin) != NULL) {
 		length = (int) strlen(stuTemp);
 		stuTemp[length-1] = '\0';
@@ -54,12 +51,27 @@ void deleteStudent() {
 	}
 	while (current != NULL) {
 		if (strcmp(current->data->lname, deleteName) == 0) {
+			//printf("inside delete while loop");
+			//prev = current->prev;
 			next = current->next;
+			//prev->next = current->next;
+			//current->next->prev = current->prev;
+			//current->prev = prev;
 			deleteNode(current);
 			current = next;
 		} else {
 			current = current->next;
 		}
+		//head
+		/*if ((current->prev == NULL) && (strcmp(current->data->lname, deleteName) == 0)) {
+			prev = current->prev;
+			next = current->next;
+			prev->next = next;
+			next->prev = prev;
+			deleteNode(current);
+		} else {
+			current = current->next;
+		}*/
 	}
 	free(deleteName);
 }
@@ -74,8 +86,8 @@ void printIO(struct node *current) {
 	while (current != NULL) {
 		printf("\n");
 		printf("Name: %s %s, \nID: %ld, \nCurrent Year: %s", current->data->fname, current->data->lname, current->data->id, current->data->curryear);
-	       current = current->next;
-	       printf("\n");
+		current = current->next;
+		printf("\n");
 	}	       
 }
 void printRO(struct node *current) {
@@ -128,7 +140,6 @@ int main() {
         printf("5. Exit\n");
         printf("Enter choice NUMBER: ");
         //scan for number
-        if (scanf("%d", &i) <= 0) {
             printf("Error! Only Integer");
             exit(0);
         } else {	
@@ -178,7 +189,6 @@ int main() {
                             newStudent->gradyear = tempGradYear;
 			    
 			    head=addStudent(head, newStudent);
-			    printf("%d\n",head->data->gradyear);
 			    break;
 		    case 2:
 			    getchar();
@@ -218,6 +228,15 @@ int main() {
 	    }
         }
     }
+    struct node *temp = head;
+    while (temp) { 
+	    free(temp->data->fname);
+            free(temp->data->lname);
+            struct node *cur = temp;
+            temp = temp->next;
+            free(cur);
+    }
+    return 0;
 }
 
 /**
@@ -227,11 +246,3 @@ int main() {
  * - put everything in one executable
  * - EX:
  * --- list: main.c list.h list.c
- * --- gcc -g main.c list.c -o list
- * - Clean up
- * 
- * - comments:
- * --- for functions
- * --- what it does, inputs, returns
- * --- does it modify
-*/
